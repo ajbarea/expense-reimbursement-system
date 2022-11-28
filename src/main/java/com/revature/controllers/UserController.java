@@ -28,7 +28,7 @@ public class UserController {
 		
 		User target = om.readValue(body, User.class);
 		
-		logger.info("New User: " + target);
+		logger.info("New " + target);
 		
 		boolean created = uServ.registerUser(target);
 		
@@ -37,7 +37,7 @@ public class UserController {
 			ctx.status(HttpStatus.CREATED);
 		}
 		else {
-			ctx.html(">>> ERROR: User was not created. Please try again.");
+			ctx.html("ERROR: User was not created. Please try again.");
 			ctx.status(HttpStatus.NO_CONTENT);
 		}
 	};

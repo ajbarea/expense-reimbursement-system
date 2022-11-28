@@ -16,16 +16,16 @@ public class MainApp {
 		Javalin app = Javalin.create().start(9000);
 		
 		app.before(ctx -> {
-			logger.info(">>> There was a request at URL '" +ctx.url() + "'....");
+			logger.info("There was a request at URL '" +ctx.url() + "'....");
 		});
 		
 		app.after(ctx -> {
-			logger.info(">>> Request at URL '" +ctx.url() + "' has connected successfully.");
+			logger.info("Request at URL '" +ctx.url() + "' has connected successfully.");
 		});
 		
 		// GET
 		app.get("/test", ctx -> {
-			logger.info(">>> Testing app...");
+			logger.info("Testing app...");
 			ctx.html("Welcome to the Expense Reimbursement System");
 		});
 		

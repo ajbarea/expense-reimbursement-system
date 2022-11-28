@@ -25,8 +25,8 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public int createUser(User user) {
-		try {          // INSERT INTO "ERS_USERS" ("ERS_USERNAME", "ERS_PASSWORD", "USER_FIRST_NAME", "USER_LAST_NAME", "USER_EMAIL", "USER_ROLE_ID") VALUES ('ajbarea', 'password1', 'AJ', 'Barea', 'ajb@rev.com', 2);
-			String sql = "INSERT INTO ERS_USERS (ERS_USERNAME, ERS_PASSWORD, USER_FIRST_NAME, USER_LAST_NAME, USER_EMAIL, USER_ROLE_ID) VALUES (?, ?, ?, ?, ?, ?)"; // '?' placeholder
+		try {
+			String sql = "INSERT INTO ERS_USERS (ERS_USERNAME, ERS_PASSWORD, USER_FIRST_NAME, USER_LAST_NAME, USER_EMAIL, USER_ROLE_ID) VALUES(?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
@@ -55,7 +55,33 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User getUserById(int id) {
-		// TODO Auto-generated method stub
+		try {
+			String sql = "SELECT * FROM ERS_USERS WHERE ERS_USERS_ID = ?";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			User target = new User();
+			
+			while(rs.next()) {
+				target.setId(rs.getInt(1));
+				target.setUsername(rs.getString(2));
+				target.setPassword(rs.getString(3));
+				target.setFirstName(rs.getString(4));
+				target.setLastName(rs.getString(5));
+				target.setEmail(rs.getString(6));
+				target.setRole(rs.getInt(7));	
+			}
+			
+			return target;
+			
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
 		return null;
 	}
 
