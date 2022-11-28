@@ -17,6 +17,10 @@ public class UserServiceImpl implements UserService {
 		userDAO = new UserDAOImpl();
 	}
 	
+	public UserServiceImpl(UserDAOImpl ud) {
+		this.userDAO = ud;
+	}
+	
 	@Override
 	public boolean registerUser(User user) {
 		logger.info("UserServiceImpl - registerUser() - Registering new User...");
