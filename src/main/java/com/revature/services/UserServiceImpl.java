@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public UserServiceImpl(UserDAOImpl ud) {
-		this.userDAO = ud;
+		UserServiceImpl.userDAO = ud; // If error, replace with: "this.userDAO = ud;"
 	}
 	
 	@Override
@@ -54,5 +54,4 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }
