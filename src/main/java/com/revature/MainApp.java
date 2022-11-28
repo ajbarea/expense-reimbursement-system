@@ -29,6 +29,9 @@ public class MainApp {
 			ctx.html("Welcome to the Expense Reimbursement System");
 		});
 		
+		app.get("/users/{id}", UserController.getUserById);
+		
+		
 		// POST
 		app.post("users/register", UserController.register);
 	}

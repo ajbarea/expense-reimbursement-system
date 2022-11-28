@@ -41,4 +41,20 @@ public class UserController {
 			ctx.status(HttpStatus.NO_CONTENT);
 		}
 	};
+	
+	public static Handler getUserById = ctx -> {
+		logger.info("A database search request has been recieved...");
+		int id = Integer.parseInt(ctx.pathParam("id"));
+		
+		User target = uServ.getUserById(id);
+		
+		if(target != null && target.getUsername() != null) {
+			logger.info("User successfully retrieved from database.");
+			ctx.json(target);
+		}
+		else {
+			ctx.html("ERROR: Could not find User ID " + id + " in the database. Please try again.");
+			ctx.status(HttpStatus.NOT_FOUND);
+		}
+	};
 }
