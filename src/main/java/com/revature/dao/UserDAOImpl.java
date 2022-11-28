@@ -87,7 +87,32 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User getUserByUsername(String username) {
-		// TODO Auto-generated method stub
+		try {
+			String sql = "SELECT * FROM ERS_USERS WHERE ERS_USERNAME = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, username);
+			
+			ResultSet rs = ps.executeQuery();
+
+			User user = new User();
+
+			while(rs.next()) {
+				user.setId(rs.getInt(1));
+				user.setUsername(rs.getString(2));
+				user.setPassword(rs.getString(3));
+				user.setFirstName(rs.getString(4));
+				user.setLastName(rs.getString(5));
+				user.setEmail(rs.getString(6));
+				user.setRole(rs.getInt(7));
+			}
+			
+			return user;
+			
+		}catch(SQLException sqlEx) {
+			logger.error("UserDAOImpl::getUserByUsername() exception - Message: " + sqlEx.getMessage());
+		}
+		
 		return null;
 	}
 

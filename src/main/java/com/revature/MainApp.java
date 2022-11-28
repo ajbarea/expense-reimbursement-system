@@ -20,7 +20,7 @@ public class MainApp {
 		});
 		
 		app.after(ctx -> {
-			logger.info("Request at URL '" +ctx.url() + "' has connected successfully.");
+			logger.info("Request at URL '" +ctx.url() + "' has completed successfully.\n");
 		});
 		
 		// GET
@@ -30,7 +30,6 @@ public class MainApp {
 		});
 		
 		app.get("/users/{id}", UserController.getUserById);
-		
 		
 		// POST
 		app.post("users/register", UserController.register);

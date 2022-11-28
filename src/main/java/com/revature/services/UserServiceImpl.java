@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public boolean registerUser(User user) {
-		logger.info("UserServiceImpl - registerUser() - Registering new User...");
+		logger.info("UserService::registerUser() called. Registering new User...");
 		
 		int id = userDAO.createUser(user);
 		
@@ -34,24 +34,31 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean login(String username, String password) {
-		// TODO Auto-generated method stub
-		return false;
+		logger.info("UserService::login() called. Trying to find username " + username + "...");
+		
+		User target = userDAO.getUserByUsername(username);
+		
+		return target.getUsername().equalsIgnoreCase(username) && target.getPassword().equalsIgnoreCase(password) ? true : false;
 	}
 
 	@Override
 	public User getUserById(int id) {
+		logger.info("UserService::getUserById() called. Trying to find user ID# "+ id +"...");
+		
 		return userDAO.getUserById(id);
 	}
 
 	@Override
 	public boolean updateUser(User user) {
-		// TODO Auto-generated method stub
-		return false;
+		logger.info("UserService::updateUser() called. Updating user ID# "+ user.getId() +"...");
+		
+		return userDAO.updateUser(user);
 	}
 
 	@Override
 	public boolean deleteUser(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		logger.info("UserService::deleteUserById() called. Deleting user ID# "+ id +"...");
+		
+		return userDAO.deleteUserById(id);
 	}
 }
