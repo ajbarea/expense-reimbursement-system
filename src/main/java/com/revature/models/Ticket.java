@@ -1,7 +1,6 @@
 package com.revature.models;
 
 import java.sql.Timestamp;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Ticket {
@@ -10,7 +9,10 @@ public class Ticket {
 	private Timestamp submitted;
 	private Timestamp resolved;
 	private String description;
-	private byte[] receipt; // byte[] receipt = {0, 1, 2, 3, 124, 125, 126, 127};
+	// byte[] receipt = {0, 1, 2, 3, 124, 125, 126, 127}
+	// create table test(id int, image bytea);
+	// insert into test values (1, pg_read_file('/home/xyz')::bytea);
+	private String receipt;
 	private int author;
 	private int resolver;
 	private int status;
@@ -21,7 +23,7 @@ public class Ticket {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Ticket(int id, double amount, Timestamp submitted, Timestamp resolved, String description, byte[] receipt,
+	public Ticket(int id, double amount, Timestamp submitted, Timestamp resolved, String description, String receipt,
 			int author, int resolver, int status, int type) {
 		super();
 		this.id = id;
@@ -36,7 +38,7 @@ public class Ticket {
 		this.type = type;
 	}
 
-	public Ticket(double amount, Timestamp submitted, Timestamp resolved, String description, byte[] receipt,
+	public Ticket(double amount, Timestamp submitted, Timestamp resolved, String description, String receipt,
 			int author, int resolver, int status, int type) {
 		super();
 		this.amount = amount;
@@ -90,11 +92,11 @@ public class Ticket {
 		this.description = description;
 	}
 
-	public byte[] getReceipt() {
+	public String getReceipt() {
 		return receipt;
 	}
 
-	public void setReceipt(byte[] receipt) {
+	public void setReceipt(String receipt) {
 		this.receipt = receipt;
 	}
 
@@ -132,12 +134,7 @@ public class Ticket {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(receipt);
-		result = prime * result
-				+ Objects.hash(amount, author, description, id, resolved, resolver, status, submitted, type);
-		return result;
+		return Objects.hash(amount, author, description, id, receipt, resolved, resolver, status, submitted, type);
 	}
 
 	@Override
@@ -151,7 +148,7 @@ public class Ticket {
 		Ticket other = (Ticket) obj;
 		return Double.doubleToLongBits(amount) == Double.doubleToLongBits(other.amount) && author == other.author
 				&& Objects.equals(description, other.description) && id == other.id
-				&& Arrays.equals(receipt, other.receipt) && Objects.equals(resolved, other.resolved)
+				&& Objects.equals(receipt, other.receipt) && Objects.equals(resolved, other.resolved)
 				&& resolver == other.resolver && status == other.status && Objects.equals(submitted, other.submitted)
 				&& type == other.type;
 	}
@@ -159,8 +156,8 @@ public class Ticket {
 	@Override
 	public String toString() {
 		return "Ticket [id=" + id + ", amount=" + amount + ", submitted=" + submitted + ", resolved=" + resolved
-				+ ", description=" + description + ", receipt=" + Arrays.toString(receipt) + ", author=" + author
-				+ ", resolver=" + resolver + ", status=" + status + ", type=" + type + "]";
+				+ ", description=" + description + ", receipt=" + receipt + ", author=" + author + ", resolver="
+				+ resolver + ", status=" + status + ", type=" + type + "]";
 	}
 
 }

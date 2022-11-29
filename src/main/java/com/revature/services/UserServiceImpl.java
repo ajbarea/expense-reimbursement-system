@@ -27,7 +27,8 @@ public class UserServiceImpl implements UserService {
 
 		int id = userDAO.createUser(user);
 
-		logger.info("User was registered successfully. New User ID: " + id);
+		if (id != 0)
+			logger.info("User was registered successfully. New User ID: " + id);
 
 		return id != 0 ? true : false;
 	}
@@ -40,6 +41,12 @@ public class UserServiceImpl implements UserService {
 
 		if (user.getUsername() == null)
 			return false;
+
+		int role = user.getRole();
+		if (role == 1)
+			System.out.println("WELCOME ADMIN");
+		else
+			System.out.println("WELCOME EMPLOYEE");
 
 		return user.getUsername().equalsIgnoreCase(username) && user.getPassword().equalsIgnoreCase(password) ? true
 				: false;
