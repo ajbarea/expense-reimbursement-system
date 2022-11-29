@@ -28,11 +28,11 @@ public class UserController {
 
 		om.registerModule(new JavaTimeModule()); // used for time / date data types
 
-		User target = om.readValue(body, User.class);
+		User user = om.readValue(body, User.class);
 
-		logger.info("New " + target);
+		logger.info("New " + user);
 
-		boolean created = uServ.registerUser(target);
+		boolean created = uServ.registerUser(user);
 
 		if (created) {
 			ctx.html("New User was created successfully.");
@@ -48,11 +48,11 @@ public class UserController {
 
 		int id = Integer.parseInt(ctx.pathParam("id"));
 
-		User target = uServ.getUserById(id);
+		User user = uServ.getUserById(id);
 
-		if (target != null && target.getUsername() != null) {
+		if (user != null && user.getUsername() != null) {
 			ctx.html("User successfully retrieved from database.");
-			ctx.json(target);
+			ctx.json(user);
 		} else {
 			ctx.html("ERROR: Could not find User ID " + id + " in the database. Please try again.");
 			ctx.status(HttpStatus.NOT_FOUND);
@@ -68,11 +68,11 @@ public class UserController {
 
 		om.registerModule(new JavaTimeModule());
 
-		User target = om.readValue(body, User.class);
+		User user = om.readValue(body, User.class);
 
-		target.setId(id);
+		user.setId(id);
 
-		boolean isUpdated = uServ.updateUser(target);
+		boolean isUpdated = uServ.updateUser(user);
 
 		if (isUpdated == true) {
 			ctx.html("User ID " + id + " information has been updated successfully.");
@@ -103,16 +103,16 @@ public class UserController {
 		String body = ctx.body();
 
 		ObjectMapper om = new ObjectMapper();
-		LoginTemplate target = om.readValue(body, LoginTemplate.class);
+		LoginTemplate user = om.readValue(body, LoginTemplate.class);
 
-		boolean isAuthenicated = uServ.login(target.getUsername(), target.getPassword());
+		boolean isAuthenicated = uServ.login(user.getUsername(), user.getPassword());
 
 		if (isAuthenicated == true) {
-			ctx.html("Successful login. Welcome " + target.getUsername() + "!");
+			ctx.html("Successful login. Welcome " + user.getUsername() + "!");
 
 			// jakarta.servlet.http.Cookie
-			ctx.cookieStore().set("Auth-Cookie", target.getUsername() + "-56797-woof");
-			Cookie auth = new Cookie("Auth-Cookie", target.getUsername() + "woof9000bark");
+			ctx.cookieStore().set("Auth-Cookie", user.getUsername() + "-56797-woof");
+			Cookie auth = new Cookie("Auth-Cookie", user.getUsername() + "woof9000bark");
 			ctx.res().addCookie(auth);
 
 			ctx.status(HttpStatus.OK);

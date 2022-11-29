@@ -36,9 +36,12 @@ public class UserServiceImpl implements UserService {
 	public boolean login(String username, String password) {
 		logger.info("UserService::login() called. Trying to find username " + username + "...");
 
-		User target = userDAO.getUserByUsername(username);
+		User user = userDAO.getUserByUsername(username);
 
-		return target.getUsername().equalsIgnoreCase(username) && target.getPassword().equalsIgnoreCase(password) ? true
+		if (user.getUsername() == null)
+			return false;
+
+		return user.getUsername().equalsIgnoreCase(username) && user.getPassword().equalsIgnoreCase(password) ? true
 				: false;
 	}
 
