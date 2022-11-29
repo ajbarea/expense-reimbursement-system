@@ -2,16 +2,16 @@ package com.revature.models;
 
 // Convert HTTP login requests into Java objects
 public class LoginTemplate {
-	
+
 	String username;
 	String password;
-	
+
 	// Constructors from superclass
 	public LoginTemplate() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	// Constructor using all fields
 	public LoginTemplate(String username, String password) {
 		super();

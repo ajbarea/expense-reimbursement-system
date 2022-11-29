@@ -11,7 +11,7 @@ public class User {
 	private String lastName;
 	private String email;
 	private int role;
-	
+
 	// Constructors from superclass
 	public User() {
 		super();
@@ -123,5 +123,5 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", email=" + email + ", role=" + role + "]";
-	}	
+	}
 }

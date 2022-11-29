@@ -10,27 +10,27 @@ import io.javalin.Javalin;
 public class MainApp {
 
 	public static Logger logger = LoggerFactory.getLogger(MainApp.class);
-	
+
 	public static void main(String[] args) {
-		
+
 		Javalin app = Javalin.create().start(9000);
-		
+
 		app.before(ctx -> {
-			logger.info("There was a request at URL '" +ctx.url() + "'....");
+			logger.info("There was a request at URL '" + ctx.url() + "'....");
 		});
-		
+
 		app.after(ctx -> {
-			logger.info("Request at URL '" +ctx.url() + "' has completed successfully.\n");
+			logger.info("Request at URL '" + ctx.url() + "' has completed successfully.\n");
 		});
-		
+
 		// GET
 		app.get("/test", ctx -> {
 			logger.info("Testing app...");
 			ctx.html("Welcome to the Expense Reimbursement System");
 		});
-		
+
 		app.get("/users/{id}", UserController.getUserById);
-		
+
 		// POST
 		app.post("users/register", UserController.register);
 	}
