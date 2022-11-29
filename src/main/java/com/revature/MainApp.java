@@ -33,5 +33,14 @@ public class MainApp {
 
 		// POST
 		app.post("users/register", UserController.register);
+
+		app.post("/users/login", UserController.login);
+
+		// PUT
+		app.put("/users/{id}", UserController.update);
+
+		// DELETE
+		app.delete("/users/{id}", UserController.delete);
+
 	}
 }
