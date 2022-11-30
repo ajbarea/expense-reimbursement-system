@@ -1,6 +1,7 @@
 package com.revature.models;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Objects;
 
 public class Ticket {
@@ -20,7 +21,8 @@ public class Ticket {
 
 	public Ticket() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.submitted = Timestamp.from(Instant.now());
+		this.status = 1;
 	}
 
 	public Ticket(int id, double amount, Timestamp submitted, Timestamp resolved, String description, String receipt,
@@ -28,7 +30,7 @@ public class Ticket {
 		super();
 		this.id = id;
 		this.amount = amount;
-		this.submitted = submitted;
+		this.submitted = Timestamp.from(Instant.now());
 		this.resolved = resolved;
 		this.description = description;
 		this.receipt = receipt;
@@ -42,7 +44,7 @@ public class Ticket {
 			int author, int resolver, int status, int type) {
 		super();
 		this.amount = amount;
-		this.submitted = submitted;
+		this.submitted = Timestamp.from(Instant.now());
 		this.resolved = resolved;
 		this.description = description;
 		this.receipt = receipt;

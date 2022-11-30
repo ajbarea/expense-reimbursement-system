@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import java.util.List;
+
 import com.revature.models.Ticket;
 
 public interface TicketService {
@@ -8,6 +10,8 @@ public interface TicketService {
 
 	public boolean updateTicket(Ticket ticket);
 
-	public Ticket getTicketsByAuthorId(int id);
+	public Ticket getTicketById(int id);
+
+	public List<Ticket> getTicketsByAuthorId(int id);
 
 }

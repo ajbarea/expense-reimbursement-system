@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,14 +33,20 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public boolean updateTicket(Ticket ticket) {
-		// TODO Auto-generated method stub
-		return false;
+		logger.info("UserService::updateTicket() called. Updating ticket ID# " + ticket.getId() + "...");
+		return ticketDAO.updateTicket(ticket);
 	}
 
 	@Override
-	public Ticket getTicketsByAuthorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Ticket> getTicketsByAuthorId(int id) {
+		logger.info("TicketServiceImpl::getTicketsByAuthorId() called. Trying to find Author ID# " + id + "...");
+		return ticketDAO.getTicketsByAuthorId(id);
+	}
+
+	@Override
+	public Ticket getTicketById(int id) {
+		logger.info("TicketServiceImpl::getTicketById() called. Trying to find ticket ID# " + id + "...");
+		return ticketDAO.getTicketById(id);
 	}
 
 }

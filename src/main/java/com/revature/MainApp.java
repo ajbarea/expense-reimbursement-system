@@ -29,17 +29,17 @@ public class MainApp {
 			logger.info("Testing app...");
 			ctx.html("Welcome to the Expense Reimbursement System");
 		});
-
 		app.get("/users/{id}", UserController.getUserById);
+		app.get("/tickets/{id}", TicketController.getTicketById);
 
 		// POST
-		app.post("users/register", UserController.register);
+		app.post("/users/register", UserController.register);
 		app.post("/users/login", UserController.login);
-
-		app.post("tickets/submit", TicketController.createTicket);
+		app.post("/tickets/submit", TicketController.createTicket);
 
 		// PUT
 		app.put("/users/{id}", UserController.update);
+		app.put("/tickets/{id}", TicketController.resolve);
 
 		// DELETE
 		app.delete("/users/{id}", UserController.delete);

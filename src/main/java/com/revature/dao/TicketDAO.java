@@ -1,12 +1,16 @@
 package com.revature.dao;
 
+import java.util.List;
+
 import com.revature.models.Ticket;
 
 public interface TicketDAO {
 
 	int createTicket(Ticket ticket);
 
-	Ticket getTicketsByAuthorId(int AuthorId);
+	Ticket getTicketById(int id);
+
+	List<Ticket> getTicketsByAuthorId(int AuthorId);
 
 	boolean updateTicket(Ticket ticket);
 
