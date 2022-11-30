@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public UserServiceImpl(UserDAOImpl ud) {
-		UserServiceImpl.userDAO = ud; // If error, replace with: "this.userDAO = ud;"
+		UserServiceImpl.userDAO = ud;
 	}
 
 	@Override
@@ -42,14 +42,19 @@ public class UserServiceImpl implements UserService {
 		if (user.getUsername() == null)
 			return false;
 
-		int role = user.getRole();
-		if (role == 1)
-			System.out.println("WELCOME ADMIN");
-		else
-			System.out.println("WELCOME EMPLOYEE");
-
-		return user.getUsername().equalsIgnoreCase(username) && user.getPassword().equalsIgnoreCase(password) ? true
-				: false;
+		if (user.getUsername().equalsIgnoreCase(username) && user.getPassword().equalsIgnoreCase(password)) {
+			switch (user.getRole()) {
+			case 1:
+				System.out.println("Welcome Employee");
+				break;
+			case 2:
+				System.out.println("Welcome Admin");
+				break;
+			default:
+			}
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -71,5 +76,12 @@ public class UserServiceImpl implements UserService {
 		logger.info("UserService::deleteUserById() called. Deleting user ID# " + id + "...");
 
 		return userDAO.deleteUserById(id);
+	}
+
+	@Override
+	public User getUserByUsername(String ticket) {
+		logger.info("UserService::getUserByUsername() called. Trying to find username " + ticket + "...");
+
+		return userDAO.getUserByUsername(ticket);
 	}
 }

@@ -85,18 +85,35 @@ public class UserController {
 
 	public static Handler delete = ctx -> {
 
-		int id = Integer.parseInt(ctx.pathParam("id"));
+		String ticket = ctx.req().getHeader("Auth-Cookie").replaceAll("woof9000bark", "");
+		logger.info("Authentication cookie: " + ticket);
 
-		boolean isDeleted = uServ.deleteUser(id);
+		User target = uServ.getUserByUsername(ticket);
+		logger.info("Based on cookie, this is your logged in user: " + target);
 
-		if (isDeleted == true) {
-			ctx.html("User ID " + id + " has been removed from the database successfully.");
-			ctx.status(HttpStatus.OK);
-		} else {
-			ctx.html("ERROR: Could not delete User ID " + id + " from the database. Please try again.");
-			ctx.status(HttpStatus.BAD_REQUEST);
+		try {
+			if (target.getRole() == 2) {
+				int id = Integer.parseInt(ctx.pathParam("id"));
+				logger.info("This Admin user id: " + target.getId());
+				boolean isDeleted = uServ.deleteUser(id);
+
+				if (isDeleted == true) {
+					logger.info("Deletion was succussful for id:" + target.getId());
+					ctx.html("User ID# " + id + " has been removed from the system successfully.");
+					ctx.status(HttpStatus.OK);
+				} else {
+					logger.info("Error trying to delete id:" + target.getId());
+					ctx.html("Error during deletion. Try again.");
+					ctx.status(HttpStatus.BAD_REQUEST);
+				}
+			} else {
+				logger.info("Sorry, this user is not authorized to perform this operation.");
+			}
+		} catch (NullPointerException e) {
+			logger.info("NullPointerException while deleting. Error:" + e.getMessage());
+			ctx.html("Sorry, this user is not authorized to perform this operation. Error: " + e.getMessage());
+			ctx.status(HttpStatus.UNAUTHORIZED);
 		}
-
 	};
 
 	public static Handler login = ctx -> {

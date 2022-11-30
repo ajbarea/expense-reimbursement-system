@@ -2,6 +2,7 @@ package com.revature.dao;
 
 import java.util.List;
 
+import com.revature.models.Receipt;
 import com.revature.models.Ticket;
 
 public interface TicketDAO {
@@ -13,5 +14,8 @@ public interface TicketDAO {
 	List<Ticket> getTicketsByAuthorId(int AuthorId);
 
 	boolean updateTicket(Ticket ticket);
+
+	// BYTEA TEST
+	int createReceipt(Receipt r);
 
 }

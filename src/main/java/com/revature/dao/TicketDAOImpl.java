@@ -1,5 +1,8 @@
 package com.revature.dao;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +17,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.revature.models.Receipt;
 import com.revature.models.Ticket;
 import com.revature.util.JDBCConnectionUtil;
 
@@ -169,6 +173,37 @@ public class TicketDAOImpl implements TicketDAO {
 		}
 
 		return null;
+	}
+
+	@Override
+	public int createReceipt(Receipt r) {
+		try {
+
+			File file = new File("r.png");
+			FileInputStream fis = new FileInputStream(file);
+
+			String sql = "INSERT INTO Ticket (title, image) VALUES (?, ?)";
+
+			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+			pstmt.setString(1, r.getTitle());
+			pstmt.setBinaryStream(2, fis, file.length());
+
+			pstmt.executeUpdate();
+
+			ResultSet rs = pstmt.getGeneratedKeys();
+
+			rs.next();
+
+			logger.info("TicketDAOImpl - createReceipt() - New Ticket ID: " + rs.getInt(1));
+			fis.close();
+			return rs.getInt("REIMB_ID");
+
+		} catch (SQLException | IOException e) {
+			logger.error("TicketDAOImpl::createReceipt() SQLException - Message: " + e.getMessage());
+		}
+
+		return 0;
 	}
 
 }

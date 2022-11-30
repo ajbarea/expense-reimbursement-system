@@ -33,7 +33,7 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public boolean updateTicket(Ticket ticket) {
-		logger.info("UserService::updateTicket() called. Updating ticket ID# " + ticket.getId() + "...");
+		logger.info("UserService::updateTicket() called. Updating ticket # " + ticket.getId() + "...");
 		return ticketDAO.updateTicket(ticket);
 	}
 

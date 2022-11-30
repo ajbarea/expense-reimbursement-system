@@ -30,7 +30,7 @@ public class Ticket {
 		super();
 		this.id = id;
 		this.amount = amount;
-		this.submitted = Timestamp.from(Instant.now());
+		this.submitted = submitted;
 		this.resolved = resolved;
 		this.description = description;
 		this.receipt = receipt;
@@ -44,7 +44,7 @@ public class Ticket {
 			int author, int resolver, int status, int type) {
 		super();
 		this.amount = amount;
-		this.submitted = Timestamp.from(Instant.now());
+		this.submitted = submitted;
 		this.resolved = resolved;
 		this.description = description;
 		this.receipt = receipt;

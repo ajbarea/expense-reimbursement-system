@@ -89,10 +89,10 @@ public class TicketController {
 		boolean isResolved = tServ.updateTicket(ticket);
 
 		if (isResolved == true) {
-			ctx.html("Ticket ID " + id + " information has been resolved successfully.");
+			ctx.html("Ticket " + id + " has been resolved successfully.");
 			ctx.status(HttpStatus.OK);
 		} else {
-			ctx.html("ERROR: Could not resolve Ticket ID " + id + " in the database. Please try again.");
+			ctx.html("ERROR: Could not resolve Ticket #" + id + " in the database. Please try again.");
 			ctx.status(HttpStatus.BAD_REQUEST);
 		}
 	};
