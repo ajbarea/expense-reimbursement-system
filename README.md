@@ -38,7 +38,6 @@ Acceptance criteria:
 **Activity Diagram**
 <br>
 ![](./assets/activity.png)
-
 <br>
 
 ## Tech Stack
