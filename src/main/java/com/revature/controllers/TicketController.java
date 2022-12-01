@@ -97,4 +97,15 @@ public class TicketController {
 		}
 	};
 
+	public static Handler getAllT = ctx -> {
+		logger.info("TicketController::getAllT - A database search request has been recieved...");
+		List<Ticket> allTickets = tServ.getAllT();
+		if (allTickets != null) {
+			ctx.html("Tickets successfully retrieved from database.");
+			ctx.json(allTickets);
+		} else {
+			ctx.html("ERROR: Could not find ticket table in the database. Please try again.");
+			ctx.status(HttpStatus.NOT_FOUND);
+		}
+	};
 }

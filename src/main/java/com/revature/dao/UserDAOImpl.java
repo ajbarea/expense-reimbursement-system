@@ -56,10 +56,10 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User getUserById(int id) {
 		try {
+			logger.error("UserDAOImpl::getUserById() Searching database for User ID: " + id + "...");
 			String sql = "SELECT * FROM ERS_USERS WHERE ERS_USERS_ID = ?";
 
 			PreparedStatement ps = conn.prepareStatement(sql);
-
 			ps.setInt(1, id);
 
 			ResultSet rs = ps.executeQuery();

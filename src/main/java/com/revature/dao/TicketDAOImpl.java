@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
@@ -68,45 +67,38 @@ public class TicketDAOImpl implements TicketDAO {
 	@Override
 	public List<Ticket> getTicketsByAuthorId(int AuthorId) {
 		try {
-			String sql = "SELECT * FROM ERS_REIMBURSEMENT WHERE REIMB_AUTHOR = ?";
+			logger.error("TicketDAOImpl::getTicketsByAuthorId() Searching database for Author ID: " + AuthorId + "...");
 
-			PreparedStatement ps = conn.prepareStatement(sql);
+			List<Ticket> tickets = new ArrayList<Ticket>();
 
-			ps.setInt(1, AuthorId);
+			String sqlQuery = "SELECT * FROM ERS_REIMBURSEMENT WHERE REIMB_AUTHOR = ?";
 
-			ResultSet rs = ps.executeQuery();
+			PreparedStatement p = conn.prepareStatement(sqlQuery);
+			p.setInt(1, AuthorId);
 
-			ResultSetMetaData rsmd = rs.getMetaData();
-			int columnsNumber = rsmd.getColumnCount();
-			while (rs.next()) {
-				for (int i = 1; i <= columnsNumber; i++) {
-					if (i > 1)
-						System.out.print(",  ");
-					String columnValue = rs.getString(i);
-					System.out.print(columnValue + " " + rsmd.getColumnName(i));
-				}
-				System.out.println("");
+			ResultSet r = p.executeQuery();
+
+			while (r.next()) {
+				Ticket t = new Ticket();
+				t.setId(r.getInt(1));
+				t.setAmount(r.getDouble(2));
+				t.setSubmitted(r.getTimestamp(3));
+				t.setResolved(r.getTimestamp(4));
+				t.setDescription(r.getString(5));
+				t.setReceipt(r.getString(6));
+				t.setAuthor(r.getInt(7));
+				t.setResolver(r.getInt(8));
+				t.setStatus(r.getInt(9));
+				t.setType(r.getInt(10));
+				tickets.add(t);
 			}
 
-			List<Ticket> allTickets = new ArrayList<Ticket>();
-			while (rs.next()) {
-				Ticket ticket = new Ticket();
-				ps.setDouble(1, ticket.getAmount());
-				ps.setTimestamp(2, ticket.getSubmitted());
-				ps.setTimestamp(3, ticket.getResolved());
-				ps.setString(4, ticket.getDescription());
-				ps.setString(5, ticket.getReceipt());
-				ps.setInt(6, ticket.getAuthor());
-				ps.setInt(7, ticket.getResolver());
-				ps.setInt(8, ticket.getStatus());
-				ps.setInt(9, ticket.getType());
-				allTickets.add(ticket);
-			}
-
-			return allTickets;
+			return tickets;
 
 		} catch (SQLException e) {
 			logger.error("TicketDAOImpl::getTicketsByAuthorId() SQLException - Message: " + e.getMessage());
+		} finally {
+
 		}
 
 		return null;
@@ -204,6 +196,41 @@ public class TicketDAOImpl implements TicketDAO {
 		}
 
 		return 0;
+	}
+
+	@Override
+	public List<Ticket> getAllT() {
+		try {
+			List<Ticket> tickets = new ArrayList<Ticket>();
+
+			String sqlQuery = "SELECT * FROM ERS_REIMBURSEMENT ORDER BY REIMB_AUTHOR";
+
+			PreparedStatement p = conn.prepareStatement(sqlQuery);
+
+			ResultSet r = p.executeQuery();
+
+			while (r.next()) {
+				Ticket t = new Ticket();
+				t.setId(r.getInt(1));
+				t.setAmount(r.getDouble(2));
+				t.setSubmitted(r.getTimestamp(3));
+				t.setResolved(r.getTimestamp(4));
+				t.setDescription(r.getString(5));
+				t.setReceipt(r.getString(6));
+				t.setAuthor(r.getInt(7));
+				t.setResolver(r.getInt(8));
+				t.setStatus(r.getInt(9));
+				t.setType(r.getInt(10));
+				tickets.add(t);
+			}
+
+			return tickets;
+
+		} catch (SQLException e) {
+			logger.error("TicketDAOImpl::getAllT() SQLException - Message: " + e.getMessage());
+		}
+
+		return null;
 	}
 
 }

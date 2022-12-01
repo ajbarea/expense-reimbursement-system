@@ -49,4 +49,10 @@ public class TicketServiceImpl implements TicketService {
 		return ticketDAO.getTicketById(id);
 	}
 
+	@Override
+	public List<Ticket> getAllT() {
+		logger.info("TicketServiceImpl::getAllT() called. Trying to return all tickets");
+		return ticketDAO.getAllT();
+	}
+
 }

@@ -14,4 +14,6 @@ public interface TicketService {
 
 	public List<Ticket> getTicketsByAuthorId(int id);
 
+	public List<Ticket> getAllT();
+
 }

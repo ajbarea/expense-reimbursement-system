@@ -107,6 +107,7 @@ public class UserController {
 					ctx.status(HttpStatus.BAD_REQUEST);
 				}
 			} else {
+				ctx.html("Sorry, this user is not authorized to perform this operation.");
 				logger.info("Sorry, this user is not authorized to perform this operation.");
 			}
 		} catch (NullPointerException e) {

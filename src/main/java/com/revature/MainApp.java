@@ -31,6 +31,8 @@ public class MainApp {
 		});
 		app.get("/users/{id}", UserController.getUserById);
 		app.get("/tickets/{id}", TicketController.getTicketById);
+		app.get("/lister/{author}", TicketController.getTicketsByAuthorId);
+		app.get("/lister", TicketController.getAllT);
 
 		// POST
 		app.post("/users/register", UserController.register);

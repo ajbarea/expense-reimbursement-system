@@ -18,4 +18,6 @@ public interface TicketDAO {
 	// BYTEA TEST
 	int createReceipt(Receipt r);
 
+	List<Ticket> getAllT();
+
 }
