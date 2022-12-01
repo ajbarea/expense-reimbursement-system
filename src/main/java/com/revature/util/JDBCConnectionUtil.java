@@ -12,12 +12,12 @@ public class JDBCConnectionUtil {
 	public static Logger logger = LoggerFactory.getLogger(JDBCConnectionUtil.class);
 
 	public static Connection getConnection() {
-		// URL: JDBC:postgresql://[host]:[5433]/[database_name(optional)]
+		// URL: JDBC:postgresql://[host]:[port]/[database_name(optional)]
+		// URL: jdbc:postgresql://localhost:5433/
 		Connection conn = null;
 
 		try {
-			logger.info(String.format("Making a DB connection: [%s  %s]", System.getenv("DB_URL"),
-					System.getenv("DB_USERNAME")));
+			logger.info(String.format("Making a DB connection: [%s]", System.getenv("DB_URL")));
 
 			conn = DriverManager.getConnection(System.getenv("DB_URL"), System.getenv("DB_USERNAME"),
 					System.getenv("DB_PASSWORD"));

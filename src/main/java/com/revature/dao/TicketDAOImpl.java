@@ -203,7 +203,7 @@ public class TicketDAOImpl implements TicketDAO {
 		try {
 			List<Ticket> tickets = new ArrayList<Ticket>();
 
-			String sqlQuery = "SELECT * FROM ERS_REIMBURSEMENT ORDER BY REIMB_AUTHOR";
+			String sqlQuery = "SELECT * FROM ERS_REIMBURSEMENT ORDER BY REIMB_AUTHOR, REIMB_ID";
 
 			PreparedStatement p = conn.prepareStatement(sqlQuery);
 
