@@ -6,8 +6,8 @@
 
 #### 1) As an Employee I want an expense reimbursement system so that I can submit reimbursement requests and view pending request tickets.
 Acceptance criteria:
-  * a) Employees must be able to log into the ERS application using username and password input
-  * b) New users of ERS must not be allowed to register with a username that is already registered
+  * a) Employees must be able to log into the ERS application using username and password input.
+  * b) New users of ERS must not be allowed to register with a username that is already registered.
   * c) New users created in ERS should default to a non-administrative role.
   * d) Requests must include the financial cost and a description of the expense.
   * e) Employees must be able to view previously submitted reimbursement submissions.
