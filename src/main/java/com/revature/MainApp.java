@@ -38,6 +38,7 @@ public class MainApp {
 		app.post("/users/register", UserController.register);
 		app.post("/users/login", UserController.login);
 		app.post("/tickets/submit", TicketController.createTicket);
+		app.post("/users/logout", UserController.logout);
 
 		// PUT
 		app.put("/users/{id}", UserController.update);

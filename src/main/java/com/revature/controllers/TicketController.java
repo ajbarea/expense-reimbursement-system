@@ -89,6 +89,14 @@ public class TicketController {
 			if (target.getRole() == 2) {
 				int id = Integer.parseInt(ctx.pathParam("id"));
 
+				Ticket temp = tServ.getTicketById(id);
+
+				if (temp.getStatus() != 1) {
+					String s = temp.getStatus() == 2 ? "APPROVED" : "DENIED";
+					ctx.html("Ticket " + id + " has already been " + s + ".");
+					return;
+				}
+
 				String body = ctx.body();
 
 				ObjectMapper om = new ObjectMapper();

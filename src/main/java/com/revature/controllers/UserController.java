@@ -140,4 +140,10 @@ public class UserController {
 		}
 	};
 
+	public static Handler logout = ctx -> {
+		ctx.cookieStore().clear();
+		ctx.html("All users have been successfully logged out.");
+		ctx.status(HttpStatus.OK);
+	};
+
 }
