@@ -8,8 +8,11 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.revature.models.Ticket;
+import com.revature.models.User;
 import com.revature.services.TicketService;
 import com.revature.services.TicketServiceImpl;
+import com.revature.services.UserService;
+import com.revature.services.UserServiceImpl;
 
 import io.javalin.http.Handler;
 import io.javalin.http.HttpStatus;
@@ -19,6 +22,7 @@ public class TicketController {
 	private static Logger logger = LoggerFactory.getLogger(TicketController.class);
 
 	private static TicketService tServ = new TicketServiceImpl();
+	private static UserService uServ = new UserServiceImpl();
 
 	public static Handler createTicket = ctx -> {
 		logger.info("User is making a reimbursement ticket submission...");
@@ -74,26 +78,44 @@ public class TicketController {
 	};
 
 	public static Handler resolve = ctx -> {
-		int id = Integer.parseInt(ctx.pathParam("id"));
 
-		String body = ctx.body();
+		try {
+			String user_name = ctx.req().getHeader("Auth-Cookie").replaceAll("woof9000bark", "");
+			logger.info("Authentication cookie: " + user_name);
 
-		ObjectMapper om = new ObjectMapper();
+			User target = uServ.getUserByUsername(user_name);
+			logger.info("Based on cookie, this is your logged in user: " + target);
 
-		om.registerModule(new JavaTimeModule());
+			if (target.getRole() == 2) {
+				int id = Integer.parseInt(ctx.pathParam("id"));
 
-		Ticket ticket = om.readValue(body, Ticket.class);
+				String body = ctx.body();
 
-		ticket.setId(id);
+				ObjectMapper om = new ObjectMapper();
 
-		boolean isResolved = tServ.updateTicket(ticket);
+				om.registerModule(new JavaTimeModule());
 
-		if (isResolved == true) {
-			ctx.html("Ticket " + id + " has been resolved successfully.");
-			ctx.status(HttpStatus.OK);
-		} else {
-			ctx.html("ERROR: Could not resolve Ticket #" + id + " in the database. Please try again.");
-			ctx.status(HttpStatus.BAD_REQUEST);
+				Ticket ticket = om.readValue(body, Ticket.class);
+
+				ticket.setId(id);
+
+				boolean isResolved = tServ.updateTicket(ticket);
+
+				if (isResolved == true) {
+					ctx.html("Ticket " + id + " has been resolved successfully.");
+					ctx.status(HttpStatus.OK);
+				} else {
+					ctx.html("ERROR: Could not resolve Ticket #" + id + " in the database. Please try again.");
+					ctx.status(HttpStatus.BAD_REQUEST);
+				}
+			} else {
+				ctx.html("Sorry, this user is not authorized to perform this operation.");
+				logger.info("Sorry, this user is not authorized to perform this operation.");
+			}
+		} catch (NullPointerException e) {
+			logger.info("NullPointerException while updating. Error:" + e.getMessage());
+			ctx.html("Sorry, this user is not authorized to perform this operation.");
+			ctx.status(HttpStatus.UNAUTHORIZED);
 		}
 	};
 

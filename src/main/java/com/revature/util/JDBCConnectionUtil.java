@@ -17,7 +17,8 @@ public class JDBCConnectionUtil {
 		Connection conn = null;
 
 		try {
-			logger.info(String.format("Making a DB connection: [%s]", System.getenv("DB_URL")));
+			// logger.info(String.format("Making a DB connection: [%s]",
+			// System.getenv("DB_URL")));
 
 			conn = DriverManager.getConnection(System.getenv("DB_URL"), System.getenv("DB_USERNAME"),
 					System.getenv("DB_PASSWORD"));
