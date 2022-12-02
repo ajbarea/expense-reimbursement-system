@@ -20,4 +20,6 @@ public interface TicketDAO {
 
 	List<Ticket> getAllT();
 
+	List<Ticket> getAllByStatus(int status);
+
 }

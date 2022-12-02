@@ -55,4 +55,11 @@ public class TicketServiceImpl implements TicketService {
 		return ticketDAO.getAllT();
 	}
 
+	@Override
+	public List<Ticket> getAllByStatus(int status) {
+		logger.info("TicketServiceImpl::getAllByStatus() called. Trying to return all tickets with status ID# " + status
+				+ "...");
+		return ticketDAO.getAllByStatus(status);
+	}
+
 }

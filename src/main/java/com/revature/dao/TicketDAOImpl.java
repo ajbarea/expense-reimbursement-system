@@ -233,4 +233,41 @@ public class TicketDAOImpl implements TicketDAO {
 		return null;
 	}
 
+	@Override
+	public List<Ticket> getAllByStatus(int status) {
+		try {
+			List<Ticket> tickets = new ArrayList<Ticket>();
+
+			String sqlQuery = "SELECT * FROM ERS_REIMBURSEMENT WHERE REIMB_STATUS_ID = ? ORDER BY REIMB_AUTHOR, REIMB_ID";
+
+			PreparedStatement p = conn.prepareStatement(sqlQuery);
+
+			p.setInt(1, status);
+
+			ResultSet r = p.executeQuery();
+
+			while (r.next()) {
+				Ticket t = new Ticket();
+				t.setId(r.getInt(1));
+				t.setAmount(r.getDouble(2));
+				t.setSubmitted(r.getTimestamp(3));
+				t.setResolved(r.getTimestamp(4));
+				t.setDescription(r.getString(5));
+				t.setReceipt(r.getString(6));
+				t.setAuthor(r.getInt(7));
+				t.setResolver(r.getInt(8));
+				t.setStatus(r.getInt(9));
+				t.setType(r.getInt(10));
+				tickets.add(t);
+			}
+
+			return tickets;
+
+		} catch (SQLException e) {
+			logger.error("TicketDAOImpl::getAllByStatus() SQLException - Message: " + e.getMessage());
+		}
+
+		return null;
+	}
+
 }

@@ -16,4 +16,5 @@ public interface TicketService {
 
 	public List<Ticket> getAllT();
 
+	public List<Ticket> getAllByStatus(int status);
 }
