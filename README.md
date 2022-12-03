@@ -1,6 +1,8 @@
 # Expense Reimbursement System [ERS]
 > The Expense Reimbursement System allows an Employee to submit reimbursement requests to their employer to be refunded for various paid activities. Financial Managers can approve or deny pending reimbursement tickets. All users and their submitted requests are stored in a PostgreSQL database.
 
+[Introducing the Expense Reimbursement System](https://youtu.be/t2p_fUak_Mw)
+
 ---
 ### (Problem Statement): Can an expense reimbursement system be implemented to allow for the submission, approval, and the denial of employee expense reimbursements?
 
