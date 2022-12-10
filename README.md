@@ -43,7 +43,7 @@ Acceptance criteria:
 <br>
 
 ## Tech Stack
-- [ ] Java 8
+- [ ] Java
 - [ ] Apache Maven
 - [ ] PostgreSQL
 - [ ] Javalin
